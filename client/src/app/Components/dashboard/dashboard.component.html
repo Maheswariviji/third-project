@@ -1,0 +1,150 @@
+ <nav class="navbar navbar-inverse">
+                <div class="container-fluid">
+                  <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                      <span class="sr-only">RET Chat</span>
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">RET Chat</a> 
+                       
+                 </div>
+<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                  
+                    <ul class="nav navbar-nav navbar-right" style="    margin-top: 19px;">
+      <li><form [formGroup]="searchForm" (submit)="search()"> 
+<div class="form-group">
+  
+     <input type="text" name="search" class="form-control" autocomplete="off" placeholder="Search Your Friends" formControlName="search" [(ngModel)]="term" />
+ 
+      
+ </div>
+    <div *ngIf="term">
+      <ul style="list-style: none;">
+<li *ngFor="let u of users | filter: term"><img style="width: 20px;
+    height: 20px;" src="../assets/user_icon.png"/>{{u.local.username}}
+    <button  type="button" class="btn btn-primary btn-xs glyphicon glyphicon-plus" (click)="addfriend(u)"></button>
+    </li>
+      </ul>
+    </div>
+</form></li>
+                    <li> <div class="ui inline dropdown active visible" tabindex="0">
+          <div class="text" (click)="sidebar.toggle()">
+            <img class="ui avatar image" src="../assets/user_icon.png">
+    
+<span [ngClass]="avail" *ngIf="avail">
+   <span [ngClass]="availability"></span>
+  </span>
+          {{username}}
+          </div>
+          <i class="dropdown icon" (click)="sidebar.toggle()"></i>
+          
+        </div></li>
+                          
+                    </ul>
+                  </div>
+                </div>
+              </nav>
+
+<sui-sidebar-container class="ui bottom attached segment">
+    <sui-sidebar class="inverted vertical" #sidebar direction="right">
+        <a class="item"><div><span>{{username}} </span>
+    <span>Coimbatore</span></div></a>
+        <a class="item"></a>
+        <a class="item"><img class="img-circle" style="width: 100px;height: 100px;
+    margin-left: 27%;" src="../assets/user_icon.png" /><br>
+    </a>
+       
+        <table class="table table-striped table-hover ">
+       <tbody> 
+       
+       <a class="item"><tr class="active"><th>Mobile #</th><td>0000000000</td></tr></a>
+      
+       <a class="item"><tr class="active"><th>City</th><td>Coimbatore</td></tr></a>
+
+<a class="item"><tr class="active"><th>Birth Date</th><td>01/01/0001</td></tr></a>
+<a class="item"><tr class="active"><th>Online Status</th><td><label class="switch">
+  <input type="checkbox" checked (change)="changeStatus()">
+  <span class="slider round"></span>
+</label></td></tr></a>
+<a c (click)="logout()"><span class="glyphicon glyphicon-off">Logout</span></a>
+       </tbody>
+       </table>
+
+    </sui-sidebar>
+        <sui-sidebar-sibling [isDimmedWhenVisible]="false">
+           <div  *ngIf="notification">
+     
+   <ul style="list-style: none;">
+<li *ngFor="let u of friendrequest">
+    <div [ngClass]="reqmessage">
+  <div><img style="width: 20px;
+    height: 20px;" src="../assets/user_icon.png" /> 
+    {{u.name}} would like to add you on ChatApp
+   <div style="float: right;
+    margin-right: -2%;"><button class="btn btn-primary btn-xs"> <span class="glyphicon glyphicon-ok" (click)="add(u)">Add</span></button></div></div></div></li>
+      </ul>
+
+  </div>
+          <div [ngClass]="messageClass" *ngIf="messageClass">
+   {{alertmsg}}
+  </div>
+    <div class="col-md-12">
+    <div class="col-md-4">
+    <p class="text-muted">Friends</p>
+    <div class="user-list-wrapper">
+        <ul class="user-list">
+          <li *ngFor="let u of friendsArray " (click)="selectedUser(u)" >
+          <img style="width: 20px;
+    height: 20px;" src="../assets/user_icon.png"/>{{u.name}}<span  class="badge">{{u.msg.length}}</span></li>
+            
+        </ul>
+      </div>
+      </div>
+   <div class="col-md-8">
+   <p class="text-muted">Chat History<p>
+      <div class="massege-wrapper">
+        <div class="massege-container">
+
+          <div *ngIf="toUser" 
+            class="opposite-user">
+            Chatting with {{toUser}}
+          </div>
+
+          <ul class="message-thread">
+
+ <li *ngFor="let m of messages" [class.align-right]="alignMessage(m.toUserId)">
+                {{ m.message}}
+            </li>
+</ul>
+          
+        </div>
+        <div class="message-typer">
+         
+<form [formGroup]="chatForm"> 
+
+              <div class="input-group">
+      <input type="text" name="search"  autocomplete="off" class="form-control" 
+            placeholder="Type and hit Enter"
+        [(ngModel)]="newmsg" 
+             formControlName="chat"  
+              /> 
+      <span class="input-group-btn">
+        <button class="btn btn-primary" type="button" (click)="sendMessage(newmsg)"><span class="glyphicon glyphicon-send" ></span></button>
+      </span>
+    </div>
+            </form>
+        </div>
+      </div>
+    </div>
+
+   
+    </div>
+  
+  
+    </sui-sidebar-sibling>
+</sui-sidebar-container>
+
+
+         

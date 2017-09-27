@@ -1,0 +1,62 @@
+<div [ngClass]="messageClass" *ngIf="messageClass">
+   {{alertmsg}}
+  </div>
+ 
+		<div class="panel panel-primary">
+		 
+ <div class="panel-body">
+ <h4 text-align="center">Contacts</h4>
+   <div class="col-md-12">
+   <div class="col-md-8">
+			<div class="massege-wrapper">
+				<div class="massege-container">
+
+					<div *ngIf="toUser" 
+						class="opposite-user">
+						Chatting with {{toUser}}
+					</div>
+
+					<ul class="message-thread">
+
+						<li *ngFor="let m of messages"
+							[class.align-right]="alignMessage(m.toUserId)"
+							>
+								{{ m.message}}
+						</li>
+</ul>
+					
+				</div>
+				<div class="message-typer">
+					
+<form [formGroup]="chatForm" > 
+
+						  <div class="input-group">
+      <input type="text" name="search"  autocomplete="off" class="form-control" 
+						placeholder="Type and hit Enter"
+				[(ngModel)]="message" 
+						 formControlName="chat"  
+						  /> 
+      <span class="input-group-btn">
+        <button class="btn btn-primary" type="button" (click)="sendMessage(message)"> <span class="glyphicon glyphicon-send" ></span></button>
+      </span>
+    </div>
+						</form>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-md-4">
+		<div class="user-list-wrapper">
+				<ul class="user-list">
+					<li *ngFor="let u of friendsArray " (click)="selectedUser(u)" ><img style="width: 20px;
+    height: 20px;" src="../assets/user_icon.png"/>{{u.name}}</li>
+             
+				</ul>
+			</div>
+			</div>
+		</div>
+		</div>
+		</div>
+		
+	
+		

@@ -1,0 +1,76 @@
+<div class="container">
+ <div class="row">
+  <div class="col-md-4 col-md-offset-4">
+   <div class="form-body">
+    
+    <ul class="nav nav-tabs final-login">
+     <li class="active"><a data-toggle="tab" routerLink="/login">Sign
+       In</a></li>
+     <li><a data-toggle="tab" routerLink="/register">Join us!</a></li>
+    </ul>
+    <form [formGroup]="loginform" (submit)="onLogin()">
+     <div class="tab-content">
+      <div id="sectionA" class="tab-pane fade in active">
+       <div class="innter-form sa-innate-form">
+        <div class="form-group">
+         <label for="email">Email address</label>
+         <div
+          [ngClass]="{'has-error': (loginform.controls.email.errors && loginform.controls.email.dirty) || (!validateEmail && loginform.controls.email.dirty), 'has-success': !loginform.controls.email.errors && validateEmail}">
+          <input type="email" class="form-control"
+           placeholder="*Email" name="email"
+           formControlName="email" (change)="checkEmailForLogin()" />
+          <ul class="help-block">
+           <li
+            *ngIf="loginform.controls.email.errors?.required && loginform.controls.email.dirty">This
+            field is required</li>
+           <li
+            *ngIf="(loginform.controls.email.errors?.minlength && loginform.controls.email.dirty || loginform.controls.email.errors?.maxlength && loginform.controls.email.dirty ) && loginform.controls.email.dirty">Minimum
+            characters: 5, Maximum characters: 30</li>
+           <li
+            *ngIf="loginform.controls.email.errors?.validateEmail && loginform.controls.email.dirty">This
+            must be a valid e-mail</li>
+          
+          </ul>
+         </div>
+        </div>
+       
+        <div class="form-group">
+         <label for="password">Password</label>
+         <div
+          [ngClass]="{'has-error':(loginform.controls.password.errors && loginform.controls.password.dirty), 'has-success': !loginform.controls.password.errors }">
+          <input type="password" class="form-control"
+           placeholder="*Password" name="password"
+           formControlName="password">
+          <ul class="help-block">
+           <li
+            *ngIf="loginform.controls.password.errors?.required && loginform.controls.password.dirty">This
+            field is required</li>
+          </ul>
+         </div>
+        </div>
+
+        <input [disabled]="!loginform.valid || !emailValid" type="submit"
+       class="btn btn-primary"  value="Sign In" /> <a routerLink="/forgot">Forgot
+         Password?</a> 
+       </div>
+       <div class="social-login">
+        <p>- - - - - - - - - - - - - Sign In With - - - - - - - - -
+         - - - -</p>
+        <ul>
+         <li><a href="/socialAuthentication/auth/twitter"><i class="fa fa-twitter"></i>
+           Twitter</a></li>
+         <li><a href="/socialAuthentication/auth/google"><i
+           class="fa fa-google-plus"></i>Google</a></li>
+            <li><a href="/socialAuthentication/auth/linkedin"><i class="fa fa-linkedin"></i>
+           linkedIn</a></li>
+        </ul>
+       </div>
+       <div class="clearfix"></div>
+      </div>
+   
+   </div>
+    </form>
+   </div>
+  </div>
+ </div>
+</div>
