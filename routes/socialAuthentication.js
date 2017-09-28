@@ -46,13 +46,14 @@ passport.use(new LinkedInStrategy({
 	                 to: profile.emails[0].value,
 	                 subject: 'Sending User Credential',
 	                 html:
-	                     "<header align='center'>" 
-	                    +
-	                      "</header> " +
-	                      "<div align='center'> Hello  <strong>"+ profile.displayName + "</strong>,<br><br> Your local SignIn password : "+password+" you can reset it by login or by forgot password"+
-	                     "</div><div class='flex-container'>" +
-	                    
-	                      "</div> "
+	                    "<header align='center'>" +
+                 "<a>Chat App " +
+                "</a>" +
+                  "</header> " +
+                  "<div align='center'> Hello  <strong>"+ user.local.username + "</strong>,<br><br>chatApp,your are account was successfully registered."+
+                 "</div><div class='flex-container'>" +
+                  " <footer align='center'>Copyright</footer>" +
+                  "</div> "
 	               };
 
 	               transporter.sendMail(mailOptions, function(error, info){
@@ -109,12 +110,14 @@ passport.use(new GoogleStrategy({
                  to: profile.emails[0].value,
                  subject: 'Sending User Credential',
                  html:
-                     "<header align='center'>" 
-                      "</header> " +
-                      "<div align='center'> Hello  <strong>"+ profile.displayName + "</strong>,<br><br> Your local SignIn password : "+password+" you can reset it by login or by forgot password"+
-                     "</div><div class='flex-container'>" +
-                     
-                      "</div> "
+                     "<header align='center'>" +
+                 "<a>Chat App " +
+                "</a>" +
+                  "</header> " +
+                  "<div align='center'> Hello  <strong>"+ user.local.username + "</strong>,<br><br>chatApp,your are account was successfully registered."+
+                 "</div><div class='flex-container'>" +
+                  " <footer align='center'>Copyright</footer>" +
+                  "</div> "
                };
 
                transporter.sendMail(mailOptions, function(error, info){
@@ -171,13 +174,14 @@ passport.use(new tiwtterStrategy({
                  to: profile.emails[0].value,
                  subject: 'Sending User Credential',
                  html:
-                     "<header align='center'>" 
-                      +
-                      "</header> " +
-                      "<div align='center'> Hello  <strong>"+ profile.displayName + "</strong>,<br><br> Your local SignIn password : "+password+" you can reset it by login or by forgot password"+
-                     "</div><div class='flex-container'>" +
-                     
-                      "</div> "
+                    "<header align='center'>" +
+                 "<a>Chat App " +
+                "</a>" +
+                  "</header> " +
+                  "<div align='center'> Hello  <strong>"+ user.local.username + "</strong>,<br><br>chatApp,your are account was successfully registered."+
+                 "</div><div class='flex-container'>" +
+                  " <footer align='center'>Copyright</footer>" +
+                  "</div> "
                };
 
                transporter.sendMail(mailOptions, function(error, info){
@@ -233,13 +237,14 @@ passport.use(new facebookStrategy({
                  to: profile.emails[0].value,
                  subject: 'Sending User Credential',
                  html:
-                     "<header align='center'>" +
-                     
-                      "</header> " +
-                      "<div align='center'> Hello  <strong>"+ profile.displayName + "</strong>,<br><br> Your local SignIn password : "+password+" you can reset it by login or by forgot password"+
-                     "</div><div class='flex-container'>" +
-                     
-                      "</div> "
+                    "<header align='center'>" +
+                 "<a>Chat App " +
+                "</a>" +
+                  "</header> " +
+                  "<div align='center'> Hello  <strong>"+ user.local.username + "</strong>,<br><br>chatApp,your are account was successfully registered."+
+                 "</div><div class='flex-container'>" +
+                  " <footer align='center'>Copyright</footer>" +
+                  "</div> "
                };
 
                transporter.sendMail(mailOptions, function(error, info){

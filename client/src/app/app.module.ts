@@ -19,14 +19,14 @@ import { NotAuthGuard } from './guards/notAuth.guard';
 import { ResetPasswordComponent } from './Components/reset-password/reset-password.component';
 import { FilterPipe } from './Pipes/filter.pipe';
 import { ChatService } from './Services/chat.service';
-
+import { SocketService } from './Services/socket.service';
 import { PushNotificationsModule } from 'angular2-notifications';
 import { SidebarModule } from 'ng-sidebar';
 
 import { ProfileComponent } from './Components/profile/profile.component';
 import { ChangeComponent } from './Components/change/change.component';
 import { FriendsComponent } from './Components/friends/friends.component';
-
+import { SidebarComponent } from './Components/sidebar/sidebar.component';
 import {SuiModule} from 'ng2-semantic-ui';
 @NgModule( {
     declarations: [
@@ -39,7 +39,8 @@ import {SuiModule} from 'ng2-semantic-ui';
         FilterPipe,
         ProfileComponent,
         ChangeComponent,
-        FriendsComponent
+        FriendsComponent,
+        SidebarComponent
 
         
     ],
@@ -54,7 +55,7 @@ import {SuiModule} from 'ng2-semantic-ui';
         SuiModule
     ],
    
-    providers: [ChatService,AuthService,LoginAuthService,ForgotPasswordService,AuthGuard, NotAuthGuard,ResetpasswordService],
+    providers: [ChatService,SocketService,AuthService,LoginAuthService,ForgotPasswordService,AuthGuard, NotAuthGuard,ResetpasswordService],
     bootstrap: [AppComponent]
 } )
 export class AppModule { }

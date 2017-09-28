@@ -44,5 +44,12 @@ delmsg(data){
 	console.log(data);
     return this.http.put(this.domain + '/reg/deletemsg/' + data.id,data).map(res => res.json());
 }
+getMessages(msg){
+  return this.http.post(this.domain + '/reg/getmsg',msg).map(res => res.json());
+
+}
+gethistory(id){
+  return this.http.post(this.domain + '/reg/gethistory',id).map(res => res.json());
+}
 
 }

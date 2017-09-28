@@ -9,7 +9,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FilterPipe } from '../../Pipes/filter.pipe';
 import { AuthService } from '../../Services/regAuth.service';
 import { ChatService } from '../../Services/chat.service';
-
+import { SocketService } from '../../Services/socket.service';
 import { PushNotificationsService } from 'angular2-notifications'; //import the service
 
 import { Injectable } from '@angular/core';
@@ -62,12 +62,17 @@ toSocketId;
 toUser;
 avail;
 availability;
+toavail;
+toavailability;
 newmsg;
 newarr=[];
-
+icon=false;
+history=false;
+home=true;
    chatForm: FormGroup;
   constructor( public chatService : ChatService,
     public _pushNotifications: PushNotificationsService,
+    public socketService : SocketService,
     public toastr: ToastsManager,
 public vcr: ViewContainerRef,
 public searchService: AuthService,public router: Router ,private formBuilder: FormBuilder,public route: ActivatedRoute,private authService: LoginAuthService) {
@@ -106,6 +111,8 @@ public searchService: AuthService,public router: Router ,private formBuilder: Fo
  
   ngOnInit() {
     this.userId = this.route.snapshot.params['userid'];
+     this.history=false;
+    this.home=true;
         this.chatService.getUser(this.userId).subscribe(userData => {
       console.log(userData.userData);
       this.userSocketId=userData.userData.local.socketId;
@@ -129,8 +136,24 @@ if(len==0){
         
 }, 3000);
  }
-    
-  });
+ else
+ {
+   console.log(this.offlinemessages.length);
+              for(let i = 0; i< this.offlinemessages.length; i++){
+console.log(this.offlinemessages[i].msg);
+    console.log(this.offlinemessages[i].msg.length);
+  
+  if(this.offlinemessages[i].msg.length>0){
+    this.icon=true;
+  }
+  else
+  {
+    this.icon=true;
+  }
+}
+}
+});
+ 
 console.log(this.friendrequest);
 console.log(this.friendrequest.length);
    if(this.friendrequest.length==0){
@@ -153,6 +176,19 @@ console.log(this.friendrequest.length);
        for(let i = 0; i< data.user.length; i++){
  if(data.user[i]._id!=this.userId){
 this.users.push(data.user[i]);
+   console.log(this.offlinemessages.length);
+              for(let j = 0; j< this.offlinemessages.length; j++){
+           if(this.offlinemessages[j].id==data.user[i]._id){
+             if(data.user[i].local.onlineStatus=='Y'){
+
+ this.availability = 'onclass';
+             }
+             else
+             {
+         this.availability = 'offclass';
+             }
+           }
+                }
  }
 }
 console.log(this.users);
@@ -164,10 +200,15 @@ this.socket.on('chatmsg-response',(data)=>
   console.log(data);
   console.log(data.data);
    console.log(data.data.message);
-   if(this.toUserId && this.toUserId == data.data.fromUserId) {
+   console.log(data.data.toUserId)
+   console.log(this.userId);
+   if((this.toUserId && this.toUserId == data.data.fromUserId)||(data.data.toUserId==this.userId)) {
+     
      this.newarr.push(data.data);
                 this.messages.push(data.data);
                 console.log(this.messages);
+                 this.history=true;
+    this.home=false;
                 this.chatService.addNewChat(this.newarr).subscribe(data => {
    console.log(data);
                 setTimeout( () =>{
@@ -195,14 +236,11 @@ this.chatService.getUser(this.userId).subscribe(details => {
              console.log(details.userData.local.onlineStatus);
              if(details.userData.local.onlineStatus=='Y'){
        
-               this.avail = 'label label-danger'; // Set error bootstrap class
-        this.availability = 'glyphicon glyphicon-ok';
+          this.availability = 'onclass';
 
              }
              else{
-
-               this.avail = 'label label-warning'; // Set error bootstrap class
-        this.availability = 'glyphicon glyphicon-remove';
+          this.availability = 'offclass';
              }
              console.log(details.userData);
                 this.username=details.name;
@@ -224,14 +262,12 @@ console.log("notification");
 this.chatService.getUser(this.userId).subscribe(details => {
    console.log(details.userData.local.onlineStatus);
     if(details.userData.local.onlineStatus=='Y'){
-               
-               this.avail = 'label label-danger'; // Set error bootstrap class
-        this.availability = 'glyphicon glyphicon-ok';
+      
+          this.availability = 'onclass';
              }
              else{
-
-               this.avail = 'label label-warning'; // Set error bootstrap class
-        this.availability = 'glyphicon glyphicon-remove';
+  this.availability = 'offclass';
+      
              }
                 console.log(details.name);
             console.log(details.details);
@@ -415,20 +451,15 @@ friendlist(){
   this.content=false;
 }
 
-
 changeStatus(){
   this.chatService.status(this.userId).subscribe(res => {
     console.log(res);
     if(res.status){
        
-          
-               this.avail = 'label label-danger'; 
-        this.availability = 'glyphicon glyphicon-ok';
+        this.availability = 'onclass';
     }
     else{
-      
-               this.avail = 'label label-warning'; 
-        this.availability = 'glyphicon glyphicon-remove';
+         this.availability = 'offclass';
     }
   });
 }
@@ -436,7 +467,15 @@ alignMessage(userId){
     return this.userId ===  userId ? false : true;
   }
   selectedUser(user){
+    this.history=true;
+    this.home=false;
     console.log(user.id);
+    const gmsg={userId : this.userId,toUserId :user.id};
+    this.chatService.getMessages(gmsg).subscribe(data => {
+      console.log("get message");
+      console.log(data);
+    console.log(data.data);
+    this.messages=data.data;
     this.chatService.getUser(user.id).subscribe(userData => {
       console.log(userData.userData.local.friends);
       this.toUserId=user.id;
@@ -446,16 +485,29 @@ alignMessage(userId){
      console.log(this.offlinemessages.length);
               for(let i = 0; i< this.offlinemessages.length; i++){
  if(this.offlinemessages[i].id==user.id){
-   this.messages=this.offlinemessages[i].msg;
+   console.log(this.offlinemessages[i].msg);
+    console.log(this.offlinemessages[i].msg.length);
+  console.log(this.messages);
+  if(this.offlinemessages[i].msg.length>0){
+ 
+    for(let j = 0; j< this.offlinemessages[i].msg.length; j++){
+  this.messages.push(this.offlinemessages[i].msg[j]);
+let arr=[];
+arr.push(this.offlinemessages[i].msg[j]);
+  this.icon=false;
+  this.delmsg(arr,user.id);
+  }
+}
+
+ 
+  console.log(this.messages);
    }
 
  }
- if(this.messages.length>0){
-      this.delmsg(this.messages,user.id);
-    }
+ 
  });
 
-
+});
   }
   delmsg(m,id){
     console.log(m)
@@ -563,6 +615,8 @@ else{
             },100);
           this.newmsg = null;
           
+
+
    this.socket.emit('chatmsg', {
             data
         });
@@ -570,8 +624,6 @@ else{
        
         }
       }
-       
       }
-     
     }
 }

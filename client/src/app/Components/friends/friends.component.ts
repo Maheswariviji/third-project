@@ -165,7 +165,7 @@ else{
                 document.querySelector('.message-thread').scrollTop = document.querySelector('.message-thread').scrollHeight;
             },100);
           this.message = null;
-         
+          // this.socketService.sendMessage(data);
         }
       }
        

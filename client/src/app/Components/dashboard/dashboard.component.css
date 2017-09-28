@@ -119,7 +119,7 @@ input:checked + .slider:before {
 }
 
 .massege-container{
-    background-color: rgba(245, 242, 242, 0.51);
+    background-color: rgba(220, 216, 216, 0.51);;
 }
 
 .opposite-user{
@@ -174,13 +174,13 @@ input:checked + .slider:before {
 .user-list{
   padding: 10px;
   overflow-y: scroll;
-  height: 423px;
+  height: auto;
   width: 100%;
     background-color: rgba(245, 242, 242, 0.51);
 }
 
 .user-list li{
-    background-color: rgba(255, 255, 255, 0.80);
+    background-color: rgba(220, 216, 216, 0.51);;
   padding: 20px;
   list-style-type: none;
   margin-bottom: 5px;
@@ -212,3 +212,119 @@ input:checked + .slider:before {
 .overlay-display{
     display: none;
 }
+.onclass
+{
+      position: absolute;
+    top: 7px;
+    border: 1px solid #fff;
+    right: 64px;
+    font-size: 9px;
+    background: #f44336;
+    color: #fff;
+    min-width: 5px;
+    padding: 5px 5px;
+    height: 5px;
+    border-radius: 10px;
+    text-align: center;
+    line-height: 19px;
+    vertical-align: middle;
+    display: block;
+}
+.offclass
+{
+      position: absolute;
+    top: 7px;
+    border: 1px solid #fff;
+    right: 64px;
+    font-size: 9px;
+    background: #56791e;
+    color: #fff;
+    min-width: 5px;
+    padding: 5px 5px;
+    height: 5px;
+    border-radius: 10px;
+    text-align: center;
+    line-height: 19px;
+    vertical-align: middle;
+    display: block;
+}
+.card-plain
+{
+      display: inline-block;
+    position: relative;
+    width: 100%;
+    margin: 25px 0;
+    box-shadow: 0 1px 4px 0 rgba(0,0,0,.14);
+    border-radius: 3px;
+    color: rgba(0,0,0,.87);
+    background: #2c3e50 ;
+    padding: 17px;
+    color:#fff !important;
+
+}
+.user-list-search{
+  padding: 1px;
+
+  height: auto;
+  width: 100%;
+    background-color: rgba(245, 242, 242, 0.51);
+}
+.profile
+{
+  width: 100%;
+    float: left;
+    text-align: center;
+        float: left;
+    display: block;
+    width: 100%;
+    padding: 0px;
+    margin: 0px;
+    position: relative;
+    /* font-size: 25px; */
+    border-bottom: 0px;
+    color: #FFF;
+    height: 50px;
+  
+    background: #1caf9a;
+    height: auto;
+}
+.profile-name
+{
+  width: 100%;
+    float: left;
+        padding: 9px;
+    font-size: 27px;
+    font-weight: 600;
+}
+.profile-loc
+{
+      width: 100%;
+    float: left;
+    font-size: 23px;
+    font-weight: 600;
+        padding: 9px;
+            margin-top: -6%;
+}
+.sidebar-name
+{
+  font-size: 25px;
+    border-bottom: 0px;
+    color: #FFF;
+    height: 50px;
+    text-align: center;
+    background: #1caf9a;
+    width: 100%;
+    float: left;
+    display: block;
+    width: 100%;
+    padding: 0px;
+    margin: 0px;
+    position: relative;
+}
+.row
+{
+  color:white;
+}
+hr {
+    margin-top: 38px !important;
+    }

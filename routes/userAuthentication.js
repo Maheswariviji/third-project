@@ -76,10 +76,12 @@ res.json({ success: true, message: 'not registered!' });
              subject: 'Sending User Credential',
              html:
                  "<header align='center'>" +
-                  +
-                  "<div align='center'> Hello  <strong>"+ user.local.username + "</strong>,<br><br> chatApp,your are account was successfully registered."+
-                 "</div><div class='flex-container'>" 
-                  +
+                 "<a>Chat App " +
+                "</a>" +
+                  "</header> " +
+                  "<div align='center'> Hello  <strong>"+ user.local.username + "</strong>,<br><br>chatApp,your are account was successfully registered."+
+                 "</div><div class='flex-container'>" +
+                  " <footer align='center'>Copyright</footer>" +
                   "</div> "
            };
 
@@ -92,7 +94,7 @@ res.json({ success: true, message: 'not registered!' });
            });
             const token = jwt.sign({ userId: user._id }, config.secret, { expiresIn: '24h' }); 
                 res.json({ success: true, message: "Account registered! "+user.local.username, token: token, user: { username: user.local.username ,id:user._id}}); 
-
+   
      
     }
   })(req, res, next);
@@ -382,7 +384,7 @@ res.json({data:user,success:true,message:'Off Status Changed',status:false});
             }
             else
             {
-                      User.findOneAndUpdate({_id:req.params.id},{$set:{"local.onlineStatus":'Y'}},function(err,data){
+                      User.findOneAndUpdate({_id:req.params.id},{$set:{"local.onlineStatus":'Y'}},function(err,user){
   if(err){
     console.log("error");
     }
@@ -407,7 +409,7 @@ console.log("offline messages");
     }
     else
     {
-// console.log(user);
+
 console.log(data);
 console.log(data.local.friends);
        friendsArray=data.local.friends;
@@ -460,16 +462,20 @@ newchat.fromUserName=req.body[i].fromUserName,
     newchat.save(function(err,msg) {
         if (err) {
             return res.json(err);
-           
+          
              console.log("error");
         } else {
 
            console.log("saving");
            console.log(msg);
-         }
+  
+      
+        }
     });
 }
 return res.send({success:true,message:'chat message saved!'});
+
+
 
 });
 
@@ -515,4 +521,29 @@ return res.send({data:user,success:true,message:'deleted waiting msg'});
 }
   });
 });
+
+
+router.post('/getmsg',(req,res)=>{
+  console.log("get msg");
+  console.log(req.body);
+  console.log(req.body.msg);
+  console.log(req.params);
+  console.log(req.body.userId);
+ let fromUserId = req.body.userId;
+      let toUserId = req.body.toUserId;
+      let messages = {};
+ Chat.find({'$or':[{'$and':[{'toUserId': fromUserId},{'fromUserId': toUserId}]},{'$and':[{ 'toUserId': toUserId},{'fromUserId':fromUserId}] }]},function(err,msg){
+     if (err) {
+      console.log("error");
+          res.json({ success: false, message: err }); 
+        } else {
+          console.log("messages in backend");
+          console.log(msg);
+          if (msg) {
+            res.json({ success: true, message: 'history of messages', data:msg});
+  }
+}
+  });
+});
+
 module.exports =router;

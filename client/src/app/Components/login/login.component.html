@@ -29,7 +29,7 @@
            <li
             *ngIf="loginform.controls.email.errors?.validateEmail && loginform.controls.email.dirty">This
             must be a valid e-mail</li>
-          
+           <!-- <li *ngIf="emailMessage" [ngClass]="emailClass">{{ emailMessage}}</li> -->
           </ul>
          </div>
         </div>
